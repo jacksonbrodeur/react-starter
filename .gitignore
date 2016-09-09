@@ -2,3 +2,4 @@ npm-debug.log
 public/dist
 node_modules
 manifest.json
+.DS_STORE
