@@ -6,7 +6,8 @@ module.exports = {
   entry: {
     vendor: [
       'react',
-      'react-dom'
+      'react-dom',
+      'react-modal',
     ]
   },
   output: {

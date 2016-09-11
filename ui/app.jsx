@@ -2,16 +2,19 @@
 import React from 'react';
 import { searchMovies, getMovieById } from '../src/omdb';
 import Modal from 'react-modal';
-import MovieDisplay from './MovieDisplay.jsx';
+import MovieDisplay from './MovieDisplay';
 
 export default class App extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.updateSearchTerm = this.updateSearchTerm.bind(this);
     this.updateResults = this.updateResults.bind(this);
     this.getMovie = this.getMovie.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.renderMovieListItem = this.renderMovieListItem.bind(this);
+
     this.state = {
       searchTerm: '',
       results: [],
@@ -43,38 +46,40 @@ export default class App extends React.Component {
 
   updateResults() {
     searchMovies(this.state.searchTerm).then(movies => {
-      if (movies) {
-        this.setState({ results: movies });
-      } else {
-        this.setState({ results: [] });
-      }
-    }, () => {});
+      this.setState({
+        results: movies,
+      });
+    });
+  }
+
+  renderMovieListItem(movie, index) {
+    return (
+      <div
+        className="movie-list-item"
+        key={index}
+        onClick={() => this.getMovie(movie.imdbID)}
+      >
+      {`${movie.Title} (${movie.Year})`}
+      </div>
+    );
   }
 
   render() {
     return (
       <div>
-        <div className="searchBox">
+        <div className="search-box">
           Search titles:
           <input type="text" value={this.state.searchTerm} onChange={this.updateSearchTerm} />
         </div>
-        <button className="searchButton" onClick={this.updateResults}>
+        <button className="search-button" onClick={this.updateResults}>
         FIND MY MOVIES
         </button>
-        <div className="movieList">
-          {this.state.results.map((movie, index) => (
-            <div
-              className="movieListItem"
-              key={index}
-              onClick={() => this.getMovie(movie.imdbID)}
-            >
-            {`${movie.Title} (${movie.Year})`}
-            </div>
-          ))}
+        <div className="movie-list">
+          {this.state.results.map(this.renderMovieListItem)}
         </div>
         <Modal isOpen={this.state.movie}>
-          <div className="modalCloseButtonWrapper">
-            <button className="modalCloseButton" onClick={this.closeModal}>Close</button>
+          <div className="modal-close-button-wrapper">
+            <button className="modal-close-button" onClick={this.closeModal}>Close</button>
           </div>
           <MovieDisplay movie={this.state.selected_movie} />
         </Modal>

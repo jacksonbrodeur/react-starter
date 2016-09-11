@@ -10,14 +10,14 @@ class MovieDisplay extends React.Component {
   render() {
     const { movie } = this.props;
     return (
-      <div className="moviePage">
+      <div className="movie-page">
         <table>
           <tbody>
             <tr>
               <td>
-                <img className="posterImage" src={movie.Poster} alt="poster" />
+                <img className="poster-image" src={movie.Poster} alt="poster" />
               </td>
-              <td className="movieDetails">
+              <td className="movie-details">
                 <h1 className="title">Title: {movie.Title}</h1>
                 <p>Rated: {movie.Rated}</p>
                 <p>Plot: {movie.Plot}</p>

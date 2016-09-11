@@ -1,10 +1,10 @@
-.movieList {
+.movie-list {
   display: flex;
   position: relative;
   flex-flow: row wrap;
 }
 
-.movieListItem {
+.movie-list-item {
   box-sizing: border-box;
   padding: 20px;
   margin: 1ex;
@@ -17,12 +17,12 @@
   cursor: default;
 }
 
-.searchBox {
+.search-box {
   text-align: center;
   margin-bottom: 1ex;
 }
 
-.searchButton {
+.search-button {
   text-align: center;
   outline: 1px solid gray;
   cursor: default;
@@ -31,14 +31,14 @@
 }
 
 
-.movieDetails {
+.movie-details {
   text-align: justify;
 }
-.posterImage {
+.poster-image {
   margin-right: 3em;
   width: 40vw;
 }
 
-.modalCloseButtonWrapper {
+.modal-close-button-wrapper {
   text-align: right;
 }
