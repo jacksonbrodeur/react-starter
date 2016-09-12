@@ -1,63 +1,26 @@
 // eslint-disable-next-line react/prefer-stateless-function
 import React from 'react';
-import { searchMovies, getMovieById } from '../src/omdb';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Modal from 'react-modal';
 import MovieDisplay from './MovieDisplay';
 
-export default class App extends React.Component {
+import * as Actions from '../src/actions';
+
+export class App extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.updateSearchTerm = this.updateSearchTerm.bind(this);
-    this.updateResults = this.updateResults.bind(this);
-    this.getMovie = this.getMovie.bind(this);
-    this.closeModal = this.closeModal.bind(this);
     this.renderMovieListItem = this.renderMovieListItem.bind(this);
-
-    this.state = {
-      searchTerm: '',
-      results: [],
-      movie: false,
-      selected_movie: null,
-    };
-  }
-
-  getMovie(id) {
-    getMovieById(id).then(movie => {
-      this.setState({
-        selected_movie: movie,
-        movie: true,
-      });
-    });
-  }
-
-  closeModal() {
-    this.setState({
-      movie: false,
-    });
-  }
-
-  updateSearchTerm(evt) {
-    this.setState({
-      searchTerm: evt.target.value,
-    });
-  }
-
-  updateResults() {
-    searchMovies(this.state.searchTerm).then(movies => {
-      this.setState({
-        results: movies,
-      });
-    });
   }
 
   renderMovieListItem(movie, index) {
+    const { getMovieById, selectedMovie } = this.props;
     return (
       <div
         className="movie-list-item"
         key={index}
-        onClick={() => this.getMovie(movie.imdbID)}
+        onClick={() => getMovieById(movie.imdbID)}
       >
       {`${movie.Title} (${movie.Year})`}
       </div>
@@ -65,26 +28,57 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { searchTerm, results, updateSearchTerm, executeSearch, selectedMovie, deselectMovie } = this.props;
+    console.log(this.props);
     return (
       <div>
         <div className="search-box">
           Search titles:
-          <input type="text" value={this.state.searchTerm} onChange={this.updateSearchTerm} />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(evt) => updateSearchTerm(evt.target.value)}
+          />
         </div>
-        <button className="search-button" onClick={this.updateResults}>
+        <button className="search-button" onClick={() => executeSearch(searchTerm)}>
         FIND MY MOVIES
         </button>
         <div className="movie-list">
-          {this.state.results.map(this.renderMovieListItem)}
+          {results.map(this.renderMovieListItem)}
         </div>
-        <Modal isOpen={this.state.movie}>
+
+        <Modal isOpen={selectedMovie != null}>
           <div className="modal-close-button-wrapper">
-            <button className="modal-close-button" onClick={this.closeModal}>Close</button>
+            <button className="modal-close-button" onClick={deselectMovie}>Close</button>
           </div>
-          <MovieDisplay movie={this.state.selected_movie} />
+          <MovieDisplay movie={selectedMovie} />
         </Modal>
 
       </div>
     );
   }
 }
+
+App.propTypes = {
+  searchTerm: React.PropTypes.string,
+  results: React.PropTypes.array,
+  updateSearchTerm: React.PropTypes.func,
+  executeSearch: React.PropTypes.func,
+  getMovieById: React.PropTypes.func,
+  selectedMovie: React.PropTypes.object,
+  deselectMovie: React.PropTypes.func,
+};
+
+function mapStateToProps(state) {
+  return {
+    searchTerm: state.searchTerm,
+    results: state.results,
+    selectedMovie: state.selectedMovie,
+  };
+}
+
+function mapActionCreatorsToProps(dispatch) {
+  return bindActionCreators(Actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapActionCreatorsToProps)(App);

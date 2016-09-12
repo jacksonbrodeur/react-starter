@@ -4,7 +4,7 @@ const SEARCH_ENDPOINT = 'http://www.omdbapi.com/?s=';
 const ID_ENDPOINT = 'http://www.omdbapi.com/?i=';
 
 function handleJSON(json) {
-  return json.Search ? json.Search : [];
+  return json.Search ? json.Search : {};
 }
 
 function handleResponse(response) {
@@ -18,7 +18,8 @@ export async function searchMovies(title) {
   return await handleJSON(json);
 }
 
-export function getMovieById(id) {
+export async function getMovieById(id) {
   const query = ID_ENDPOINT + id + '&plot=full&r=json';
-  return fetch(query).then(handleResponse);
+  const response = await fetch(query);
+  return await handleResponse(response);
 }
