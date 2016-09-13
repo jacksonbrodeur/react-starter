@@ -4,7 +4,7 @@ const SEARCH_ENDPOINT = 'http://www.omdbapi.com/?s=';
 const ID_ENDPOINT = 'http://www.omdbapi.com/?i=';
 
 function handleJSON(json) {
-  return json.Search ? json.Search : {};
+  return json.Search ? json.Search : [];
 }
 
 function handleResponse(response) {

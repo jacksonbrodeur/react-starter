@@ -3,6 +3,7 @@ import { searchMovies, getMovieById } from './omdb';
 import * as types from './actions';
 
 export function* doSearch(searchTerm) {
+  yield put({ type: types.UPDATE_RESULTS, results: [] });
   const results = yield searchMovies(searchTerm);
   yield put({ type: types.UPDATE_RESULTS, results });
 }
