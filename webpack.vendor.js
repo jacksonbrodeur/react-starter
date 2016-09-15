@@ -7,8 +7,10 @@ module.exports = {
     vendor: [
       'react',
       'react-dom',
-      'react-modal',
       'react-router',
+      'react-redux',
+      'redux',
+      'redux-saga'
     ]
   },
   output: {

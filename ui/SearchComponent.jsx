@@ -5,6 +5,12 @@ import * as Actions from '../src/actions';
 
 export class SearchComponent extends React.Component {
 
+  static propTypes = {
+    searchTerm: React.PropTypes.string,
+    updateSearchTerm: React.PropTypes.func,
+    executeSearch: React.PropTypes.func,
+  };
+
   render() {
     const { searchTerm, updateSearchTerm, executeSearch } = this.props;
     return (
@@ -20,12 +26,6 @@ export class SearchComponent extends React.Component {
     );
   }
 }
-
-SearchComponent.propTypes = {
-  searchTerm: React.PropTypes.string,
-  updateSearchTerm: React.PropTypes.func,
-  executeSearch: React.PropTypes.func,
-};
 
 function mapStateToProps(state) {
   return {

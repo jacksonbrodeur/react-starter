@@ -6,6 +6,12 @@ import { Link } from 'react-router';
 
 export class MovieList extends React.Component {
 
+  static propTypes = {
+    results: React.PropTypes.array,
+    getMovieById: React.PropTypes.func,
+    isFirstSearch: React.PropTypes.bool,
+  }
+
   renderMovieListItem = (movie, index) => {
     const { getMovieById } = this.props;
     return (
@@ -22,7 +28,22 @@ export class MovieList extends React.Component {
   }
 
   render() {
-    const { results } = this.props;
+    const { results, isFirstSearch } = this.props;
+    if (results === null) {
+      return (
+        <div className="loading-message">
+        Loading...
+        </div>
+      )
+    }
+
+    if (results.length == 0 && !isFirstSearch) {
+      return (
+        <div className="no-results-message">
+        No results
+        </div>
+      )
+    }
     return (
       <div className="movie-list">
         {results.map(this.renderMovieListItem)}
@@ -31,14 +52,10 @@ export class MovieList extends React.Component {
   }
 }
 
-MovieList.propTypes = {
-  results: React.PropTypes.array,
-  getMovieById: React.PropTypes.func,
-};
-
 function mapStateToProps(state) {
   return {
     results: state.results,
+    isFirstSearch: state.isFirstSearch,
   };
 }
 

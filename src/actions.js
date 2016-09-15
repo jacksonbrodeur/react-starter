@@ -1,33 +1,42 @@
-export const UPDATE_SEARCH_TERM = 'UPDATE_SEARCH_TERM';
-export const EXECUTE_SEARCH = 'EXECUTE_SEARCH';
-export const GET_MOVIE = 'GET_MOVIE';
-export const DESELECT_MOVIE = 'DESELECT_MOVIE';
-export const UPDATE_RESULTS = 'UPDATE_RESULTS';
-export const SELECT_MOVIE = 'SELECT_MOVIE';
+import types from './types';
 
 export function updateSearchTerm(searchTerm) {
   return {
-    type: UPDATE_SEARCH_TERM,
+    type: types.UPDATE_SEARCH_TERM,
     searchTerm,
   };
 }
 
 export function executeSearch(searchTerm) {
   return {
-    type: EXECUTE_SEARCH,
+    type: types.EXECUTE_SEARCH,
     searchTerm,
   };
 }
 
 export function getMovieById(id) {
   return {
-    type: GET_MOVIE,
+    type: types.GET_MOVIE,
     id,
+  };
+}
+
+export function selectMovie(selectedMovie) {
+  return {
+    type: types.SELECT_MOVIE,
+    selectedMovie,
   };
 }
 
 export function deselectMovie() {
   return {
-    type: DESELECT_MOVIE,
+    type: types.DESELECT_MOVIE,
+  };
+}
+
+export function updateResults(results) {
+  return {
+    type: types.UPDATE_RESULTS,
+    results,
   };
 }

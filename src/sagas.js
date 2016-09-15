@@ -1,30 +1,24 @@
-import { put, take, fork } from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
+import { takeEvery } from 'redux-saga';
 import { searchMovies, getMovieById } from './omdb';
-import * as types from './actions';
+import { updateResults, selectMovie } from './actions';
+import types from './types';
 
-export function* doSearch(searchTerm) {
-  yield put({ type: types.UPDATE_RESULTS, results: [] });
-  const results = yield searchMovies(searchTerm);
-  yield put({ type: types.UPDATE_RESULTS, results });
+export function* doSearch(action) {
+  yield put(updateResults(null));
+  const results = yield searchMovies(action.searchTerm);
+  yield put(updateResults(results));
 }
 
 export function* watchForSearch() {
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    const action = yield take('EXECUTE_SEARCH');
-    yield fork(doSearch, action.searchTerm);
-  }
+  yield* takeEvery(types.EXECUTE_SEARCH, doSearch);
 }
 
-export function* getMovie(id) {
-  const movie = yield getMovieById(id);
-  yield put({ type: types.SELECT_MOVIE, selectedMovie: movie });
+export function* getMovie(action) {
+  const movie = yield getMovieById(action.id);
+  yield put(selectMovie(movie));
 }
 
 export function* watchForGetMovie() {
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    const action = yield take('GET_MOVIE');
-    yield fork(getMovie, action.id);
-  }
+  yield* takeEvery(types.GET_MOVIE, getMovie);
 }

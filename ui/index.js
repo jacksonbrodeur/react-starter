@@ -9,8 +9,8 @@ import { watchForSearch, watchForGetMovie } from '../src/sagas';
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
-	reducer,
-	applyMiddleware(sagaMiddleware)
+  reducer,
+  applyMiddleware(sagaMiddleware)
 );
 
 sagaMiddleware.run(watchForSearch);

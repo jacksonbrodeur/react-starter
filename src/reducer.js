@@ -1,9 +1,10 @@
-import * as types from './actions';
+import types from './types';
 
 const defaultState = {
   searchTerm: '',
   results: [],
   selectedMovie: null,
+  isFirstSearch: true,
 }
 
 function reduce(state = defaultState, action) {
@@ -12,6 +13,7 @@ function reduce(state = defaultState, action) {
       return {
         ...state,
         results: action.results,
+        isFirstSearch: false,
       };
     case types.UPDATE_SEARCH_TERM:
       return {

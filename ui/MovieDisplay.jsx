@@ -6,6 +6,11 @@ import { bindActionCreators } from 'redux';
 
 class MovieDisplay extends React.Component {
 
+  static propTypes = {
+    movie: React.PropTypes.object,
+    deselectMovie: React.PropTypes.func,
+  }
+
   constructor(props) {
     super(props);
     this.props = props;
@@ -57,11 +62,6 @@ class MovieDisplay extends React.Component {
     );
   }
 }
-
-MovieDisplay.propTypes = {
-  movie: React.PropTypes.object,
-  deselectMovie: React.PropTypes.func,
-};
 
 function mapStateToProps(state) {
   return {
