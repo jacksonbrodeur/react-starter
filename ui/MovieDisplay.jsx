@@ -16,6 +16,10 @@ class MovieDisplay extends React.Component {
     this.props = props;
   }
 
+  componentDidMount() {
+    this.props.getMovieById(this.props.params.id);
+  }
+
   render() {
     const { movie, deselectMovie } = this.props;
     const closeButton = (
