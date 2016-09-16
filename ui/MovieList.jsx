@@ -17,16 +17,11 @@ export class MovieList extends React.Component {
   }
 
   renderMovieListItem = (movie, index) => {
-    const { getMovieById } = this.props;
     return (
-      <div
-        className="movie-list-item"
-        key={index}
-        onClick={() => getMovieById(movie.imdbID)}
-      >
-      <Link to={`/movies/${movie.imdbID}`}>
-        {`${movie.Title} (${movie.Year})`}
-      </Link>
+      <div className="movie-list-item" key={index}>
+        <Link to={`/movies/${movie.imdbID}`}>
+          {`${movie.Title} (${movie.Year})`}
+        </Link>
       </div>
     );
   }
