@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "vendor": "webpack --config webpack.vendor.js",
-    "develop": "webpack-dev-server --content-base public --inline --hot --colors"
+    "develop": "webpack-dev-server --content-base public --inline --hot --colors --history-api-fallback"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
