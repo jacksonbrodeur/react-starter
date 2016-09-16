@@ -1,10 +1,10 @@
 import types from './types';
+import constants from './constants';
 
 const defaultState = {
   searchTerm: '',
-  results: [],
+  results: constants.FIRST_SEARCH,
   selectedMovie: null,
-  isFirstSearch: true,
 }
 
 function reduce(state = defaultState, action) {
@@ -13,12 +13,16 @@ function reduce(state = defaultState, action) {
       return {
         ...state,
         results: action.results,
-        isFirstSearch: false,
       };
     case types.UPDATE_SEARCH_TERM:
       return {
         ...state,
         searchTerm: action.searchTerm,
+      };
+    case types.EXECUTE_SEARCH:
+      return {
+        ...state,
+        results: constants.LOADING,
       };
     case types.SELECT_MOVIE:
       return {

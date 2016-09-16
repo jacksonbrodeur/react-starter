@@ -3,9 +3,9 @@ import { takeEvery } from 'redux-saga';
 import { searchMovies, getMovieById } from './omdb';
 import { updateResults, selectMovie } from './actions';
 import types from './types';
+import constants from './constants';
 
 export function* doSearch(action) {
-  yield put(updateResults(null));
   const results = yield searchMovies(action.searchTerm);
   yield put(updateResults(results));
 }

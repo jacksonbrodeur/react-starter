@@ -3,11 +3,15 @@ import * as Actions from '../src/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import constants from '../src/constants';
 
 export class MovieList extends React.Component {
 
   static propTypes = {
-    results: React.PropTypes.array,
+    results: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.array,
+    ]),
     getMovieById: React.PropTypes.func,
     isFirstSearch: React.PropTypes.bool,
   }
@@ -28,22 +32,10 @@ export class MovieList extends React.Component {
   }
 
   render() {
-    const { results, isFirstSearch } = this.props;
-    if (results === null) {
-      return (
-        <div className="loading-message">
-        Loading...
-        </div>
-      )
-    }
-
-    if (results.length == 0 && !isFirstSearch) {
-      return (
-        <div className="no-results-message">
-        No results
-        </div>
-      )
-    }
+    const { results } = this.props;
+    if (results === constants.FIRST_SEARCH) return null;
+    if (results === constants.LOADING) return <div className='loading-message'>Loading...</div>
+    if (results.length === 0) return <div className='no-results-message'>No Results</div>
     return (
       <div className="movie-list">
         {results.map(this.renderMovieListItem)}
